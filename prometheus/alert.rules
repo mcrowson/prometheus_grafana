@@ -1,0 +1,18 @@
+ALERT service_down
+  IF up == 0
+  FOR 5s
+  ANNOTATIONS {
+    summary = "{{ $labels.instance }} is down",
+    link = "http://monitor.server.com:3000/dashboard/db/node-exporter-server-metrics",
+    description = "The box has not responded, it might be down.",
+  }
+
+
+ALERT high_load
+  IF node_load1 > on (instance) 2 * count by (instance)(node_cpu{mode="idle"})
+  FOR 1m
+  ANNOTATIONS {
+      summary = "{{ $labels.instance }} under high load",
+      description = "High Latency on this box, check it out.",
+      link = "http://monitor.server.com:3000/dashboard/db/node-exporter-server-metrics",
+  }

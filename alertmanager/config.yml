@@ -1,0 +1,13 @@
+route:
+    receiver: 'slack'
+
+receivers:
+    - name: 'slack'
+      slack_configs:
+          - send_resolved: true
+            username: 'Prometheus'
+            channel: '#slack_channel'
+            api_url: 'https://hooks.slack.com/services/ASDFASDF'
+            text: '{{ range .Alerts}} {{ .Annotations.description }}{{ end }}'
+            title: '{{ range .Alerts }} {{ .Annotations.summary }}{{ end }}'
+            title_link: '{{ .CommonAnnotations.link }}'
